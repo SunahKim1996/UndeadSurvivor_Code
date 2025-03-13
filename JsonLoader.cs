@@ -18,7 +18,7 @@ public class RankData
 
 public class JsonLoader : Singleton<JsonLoader>
 {    
-    string rankDataPath = Path.Combine(Application.dataPath + "/8. Data/", "RankData.json");
+    string rankDataPath = Path.Combine(Application.streamingAssetsPath, "RankData.json");
 
     // Rank Data --------------------------------------------------------------
     public void SaveJsonData_Rank(List<string> recordList, int recordCount)

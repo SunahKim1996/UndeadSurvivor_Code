@@ -7,15 +7,17 @@ public class RankManager : Singleton<RankManager>
     private List<string> recordList = new List<string>();
 
     public void SetRecord(int killCount, float timer)
-    {        
+    {
+        /* PlayerPrefs 사용하는 코드
         // 기존 기록 & 새 기록 Dictionary 에 저장 
         for (int rank = 0; rank < recordCount; rank++) 
         {
             if (PlayerPrefs.HasKey($"RankRecord{rank}"))
                 recordList.Add(PlayerPrefs.GetString($"RankRecord{rank}"));
         }
-                
-        /* Json 으로 데이터 로드하는 코드
+        */
+
+        // Json 으로 데이터 로드하는 코드
         RankData data = JsonLoader.Instance.LoadRankData_Rank();
 
         for (int rank = 0; rank < data.ranking.Count; rank++)
@@ -24,7 +26,7 @@ public class RankManager : Singleton<RankManager>
             string record = $"{targetInfo.killCount}/{targetInfo.timeRecord}";
             recordList.Add(record);
         }
-        */
+        
 
         string newRecord = $"{killCount}/{timer}";
         recordList.Add(newRecord);
@@ -54,7 +56,8 @@ public class RankManager : Singleton<RankManager>
                     return 1;
             }
         });
-                
+
+        /* PlayerPrefs 로 저장하는 코드 
         // 새로운 순서를 PlayerPrefs 에 저장 
         for (int rank = 0; rank < recordList.Count; rank++)
         {
@@ -63,9 +66,10 @@ public class RankManager : Singleton<RankManager>
 
             PlayerPrefs.SetString($"RankRecord{rank}", recordList[rank]);
         }        
+        */
 
         // Json 으로 데이터 저장하는 코드
-        //JsonLoader.Instance.SaveJsonData_Rank(recordList, recordCount);
+        JsonLoader.Instance.SaveJsonData_Rank(recordList, recordCount);
 
         // UI
         UI.Instance.RefreshRankUI(recordList);
